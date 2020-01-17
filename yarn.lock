@@ -124,7 +124,7 @@ aws-sdk@^2.518.0:
     uuid "3.3.2"
     xml2js "0.4.19"
 
-axios@^0.19.0:
+axios@^0.19.0, axios@^0.19.1:
   version "0.19.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.1.tgz#8a6a04eed23dfe72747e1dd43c604b8f1677b5aa"
   integrity sha512-Yl+7nfreYKaLRvAvjNPkvfjnQHJM1yLBY3zhqAwcJSwR/6ETkanUgylgtIvkvz0xJ+p/vZuNw8X7Hnb7Whsbpw==
@@ -405,6 +405,11 @@ doctrine@^3.0.0:
   integrity sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==
   dependencies:
     esutils "^2.0.2"
+
+dotenv-override-true@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/dotenv-override-true/-/dotenv-override-true-6.2.0.tgz#4205a7e4e9161eda299d3e242f53b9b4902a2570"
+  integrity sha512-g2EEXx8eY0vy9OWlCUTg7YEHTMoKExXblryNYv/9hN7I7Q3XWMJ9VNEUQppnL/nkZ9dtVq2fKTFcs1HVMHYikg==
 
 dottie@^2.0.0:
   version "2.0.2"

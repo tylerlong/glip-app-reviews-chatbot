@@ -1,9 +1,15 @@
 {
+  "license": "MIT",
+  "scripts": {
+    "test": "node -r dotenv-override-true/config index.js"
+  },
+  "dependencies": {
+    "axios": "^0.19.1",
+    "dotenv-override-true": "^6.2.0",
+    "ringcentral-chatbot": "^1.2.5"
+  },
   "devDependencies": {
     "standard": "^14.3.1",
     "yarn-upgrade-all": "^0.5.2"
-  },
-  "dependencies": {
-    "ringcentral-chatbot": "^1.2.5"
   }
 }
