@@ -5,6 +5,7 @@
   },
   "dependencies": {
     "axios": "^0.19.1",
+    "moment-timezone": "^0.5.27",
     "pg": "^7.17.1",
     "ringcentral-chatbot": "^1.2.5",
     "serverless-http": "^2.3.0"

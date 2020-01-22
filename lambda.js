@@ -2,7 +2,11 @@ const createApp = require('ringcentral-chatbot/dist/apps').default
 const { createAsyncProxy } = require('ringcentral-chatbot/dist/lambda')
 const serverlessHTTP = require('serverless-http')
 const axios = require('axios')
-const { Service } = require('ringcentral-chatbot/dist/models')
+const { Service, Bot } = require('ringcentral-chatbot/dist/models')
+const moment = require('moment-timezone')
+
+axios.defaults.headers.common['X-Client-Key'] = process.env.APPFIGURES_CLIENT_KEY
+axios.defaults.headers.common.Authorization = `Basic ${process.env.BASIC_AUTHORIZATION_KEY}`
 
 const handle = async event => {
   const { type, text, group, bot } = event
@@ -48,3 +52,33 @@ module.exports.maintain = async () => axios.put(`${process.env.RINGCENTRAL_CHATB
     password: process.env.RINGCENTRAL_CHATBOT_ADMIN_PASSWORD
   }
 })
+module.exports.crontab = async () => {
+  const services = await Service.findAll({ where: { name: 'RingCentral Apps Reviews' } })
+  if (!services || services == null || services.length === 0) {
+    return
+  }
+  const r = await axios.get('https://api.appfigures.com/v2/reviews', {
+    params: {
+      count: 100
+    }
+  })
+  const oneDayAgo = moment().add(-1, 'day').utc().format()
+  const newReviews = r.data.reviews.filter(review => moment(review.date).tz('EST').utc().format() > oneDayAgo)
+  for (const service of services) {
+    const bot = await Bot.findByPk(service.botId)
+    try {
+      await bot.sendMessage(service.groupId, {
+        text: `
+**New reviews for the last 24 hours**
+
+${newReviews.map(review => `User **${review.author}** posted review for **${review.product_name}** **${review.store === 'apple' ? 'iOS' : 'Android'}** version ${review.version}
+**Stars**: ${review.stars}
+**Title**: ${review.title}
+**Content**: ${review.original_review}`).join('\n\n')}
+`
+      })
+    } catch (e) { // catch the exception so that it won't break the for loop
+      console.error(e)
+    }
+  }
+}
