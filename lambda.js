@@ -69,9 +69,9 @@ module.exports.crontab = async () => {
     try {
       await bot.sendMessage(service.groupId, {
         text: `
-**New reviews for the last 24 hours**
+**New app reviews posted for the last 24 hours**
 
-${newReviews.map(review => `User **${review.author}** posted review for **${review.product_name}** **${review.store === 'apple' ? 'iOS' : 'Android'}** version ${review.version}
+${newReviews.map(review => `User **${review.author}** posted review for **${review.product_name}** **${review.store === 'apple' ? 'iOS' : 'Android'}** ${review.version}
 **Stars**: ${review.stars}
 **Title**: ${review.title}
 **Content**: ${review.original_review}`).join('\n\n')}
