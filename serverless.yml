@@ -38,7 +38,6 @@ functions:
     handler: dist/lambda.crontab
     events:
       - schedule: rate(1 day)
-      - http: 'GET /crontab/test'
   proxy:
     handler: lambda.proxy
     events:
