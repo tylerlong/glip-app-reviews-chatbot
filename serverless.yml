@@ -35,7 +35,7 @@ functions:
     events:
       - http: 'GET /admin/diagnostic'
   crontab:
-    handler: dist/lambda.crontab
+    handler: lambda.crontab
     events:
       - schedule: rate(1 day)
   proxy:
