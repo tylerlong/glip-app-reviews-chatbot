@@ -34,6 +34,10 @@ functions:
     timeout: 300 # this value is not allowed by api gateway but we have proxy below to workaround it
     events:
       - http: 'GET /admin/diagnostic'
+  test:
+    handler: lambda.test
+    events:
+      - http: 'GET /test'
   crontab:
     handler: lambda.crontab
     events:

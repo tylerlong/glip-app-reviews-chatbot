@@ -82,3 +82,22 @@ ${newReviews.map(review => `User **${review.author}** posted review for **${revi
     }
   }
 }
+
+module.exports.test = async () => {
+  const r = await axios.get('https://api.appfigures.com/v2/reviews', {
+    params: {
+      count: 100
+    }
+  })
+  const oneDayAgo = moment().add(-2, 'day').utc().format()
+  const newReviews = r.data.reviews.filter(review => moment(review.date).tz('EST').utc().format() > oneDayAgo)
+  const text = `
+**New app reviews posted for the last 48 hours**
+
+${newReviews.map(review => `User **${review.author}** posted review for **${review.product_name}** **${review.store === 'apple' ? 'iOS' : 'Android'}** ${review.version}
+**Stars**: ${review.stars}
+**Title**: ${review.title}
+**Content**: ${review.original_review}`).join('\n\n')}`
+  console.log(text.replace(/[\r\n]+/g, ' '))
+  return text
+}
