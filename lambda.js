@@ -27,7 +27,7 @@ const crontab = async () => {
         text: `
 **New app reviews posted for the past 48 hours**
 
-${newReviews.map(review => `User **${review.author}** posted review for **${review.product_name}** **${review.store === 'apple' ? 'iOS' : 'Android'}** ${review.version}
+${newReviews.length === 0 ? '**None**' : newReviews.map(review => `User **${review.author}** posted review for **${review.product_name}** **${review.store === 'apple' ? 'iOS' : 'Android'}** ${review.version}
 **Stars**: ${review.stars}
 **Title**: ${review.title}
 **Content**: ${review.original_review}`).join('\n\n')}
@@ -98,7 +98,7 @@ module.exports.test = async () => {
   const text = `
 **New app reviews posted for the last 48 hours**
 
-${newReviews.map(review => `User **${review.author}** posted review for **${review.product_name}** **${review.store === 'apple' ? 'iOS' : 'Android'}** ${review.version}
+${newReviews.length === 0 ? '**None**' : newReviews.map(review => `User **${review.author}** posted review for **${review.product_name}** **${review.store === 'apple' ? 'iOS' : 'Android'}** ${review.version}
 **Stars**: ${review.stars}
 **Title**: ${review.title}
 **Content**: ${review.original_review}`).join('\n\n')}`
