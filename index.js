@@ -6,7 +6,7 @@ axios.defaults.headers.common.Authorization = `Basic ${process.env.BASIC_AUTHORI
 
 ;(async () => {
   const r = await axios.get('https://api.appfigures.com/v2/reviews')
-  const oneDayAgo = moment().add(-1, 'day').utc().format()
+  const oneDayAgo = moment().add(-3, 'day').utc().format()
   const newReviews = r.data.reviews.filter(review => moment(review.date).tz('EST').utc().format() > oneDayAgo)
   console.log(newReviews)
 })()
