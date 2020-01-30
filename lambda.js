@@ -18,7 +18,7 @@ const crontab = async () => {
       count: 100
     }
   })
-  const oneDayAgo = moment().add(-2, 'days').add(-12, 'hours').utc().format()
+  const oneDayAgo = moment().add(-2, 'days').utc().format()
   const newReviews = r.data.reviews.filter(review => moment(review.date).tz('EST').utc().format() > oneDayAgo)
   for (const service of services) {
     const bot = await Bot.findByPk(service.botId)
@@ -93,7 +93,7 @@ module.exports.test = async () => {
       count: 100
     }
   })
-  const oneDayAgo = moment().add(-2, 'days').add(-12, 'hours').utc().format()
+  const oneDayAgo = moment().add(-2, 'days').utc().format()
   const newReviews = r.data.reviews.filter(review => moment(review.date).tz('EST').utc().format() > oneDayAgo)
   const text = `
 **New app reviews posted for the last 48 hours**
