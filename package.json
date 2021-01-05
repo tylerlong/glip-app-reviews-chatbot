@@ -4,7 +4,7 @@
     "test": "node -r dotenv-override-true/config index.js"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "moment-timezone": "^0.5.27",
     "pg": "^7.18.1",
     "ringcentral-chatbot": "^1.2.5",
