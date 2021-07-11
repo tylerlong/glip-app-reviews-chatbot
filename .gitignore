@@ -1,5 +1,5 @@
 node_modules/
-.env
+.myenv
 .env.yml
 .serverless/
 .secret

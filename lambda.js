@@ -96,7 +96,7 @@ module.exports.test = async () => {
   const oneDayAgo = moment().add(-2, 'days').utc().format()
   const newReviews = r.data.reviews.filter(review => moment(review.date).tz('EST').utc().format() > oneDayAgo)
   const text = `
-**New app reviews posted for the last 48 hours**
+**App reviews posted during the last 48 hours**
 
 ${newReviews.length === 0 ? '**None**' : newReviews.map(review => `User **${review.author}** posted review for **${review.product_name}** **${review.store === 'apple' ? 'iOS' : 'Android'}** ${review.version}
 **Stars**: ${review.stars}
