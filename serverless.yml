@@ -28,31 +28,31 @@ provider:
 package:
   patterns:
     - '!./**'
-    - 'lambda.js'
+    - 'dist/lambda.js'
     - 'node_modules/**'
   excludeDevDependencies: true
 
 functions:
   app:
-    handler: lambda.app
+    handler: dist/lambda.app
     timeout: 300 # this value is not allowed by api gateway but we have proxy below to workaround it
     events:
       - http: 'GET /admin/dump-database'
       - http: 'GET /admin/list-subscriptions'
   # test:
-  #   handler: lambda.test
+  #   handler: dist/lambda.test
   #   events:
   #     - http: 'GET /test'
   crontab:
-    handler: lambda.crontab
+    handler: dist/lambda.crontab
     events:
       - schedule: rate(1 day)
   proxy:
-    handler: lambda.proxy
+    handler: dist/lambda.proxy
     events:
       - http: 'ANY /{proxy+}'
   maintain:
-    handler: lambda.maintain
+    handler: dist/lambda.maintain
     events:
       - schedule: rate(1 day)
 
