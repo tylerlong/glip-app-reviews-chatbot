@@ -117,34 +117,55 @@ module.exports.maintain = async () =>
   );
 
 module.exports.test = async () => {
-  const r = await axios.get('https://api.appfigures.com/v2/reviews', {
-    params: {
-      count: 100,
-    },
-  });
-  const oneDayAgo = moment().add(-2, 'days').utc().format();
-  const newReviews = r.data.reviews.filter(
-    (review: any) => moment(review.date).tz('EST').utc().format() > oneDayAgo
+  const date = new Date();
+  date.setDate(date.getDate() - 2);
+  const reviews = await axios.post(
+    `https://api.birdeye.com/resources/v1/review/businessId/${process.env.BIRDEYE_BUSINESS_ID}?api_key=${process.env.BIRDEYE_API_KEY}`,
+    {
+      fromDate: date.toLocaleDateString(),
+    }
   );
-  const text = `
-**App reviews posted during the last 48 hours**
-
-${
-  newReviews.length === 0
-    ? '**None**'
-    : newReviews
-        .map(
-          (review: any) => `User **${review.author}** posted review for **${
-            review.product_name
-          }** **${review.store === 'apple' ? 'iOS' : 'Android'}** ${
-            review.version
-          }
-**Stars**: ${review.stars}
-**Title**: ${review.title}
-**Content**: ${review.original_review}`
-        )
-        .join('\n\n')
-}`;
-  console.log(text.replace(/[\r\n]+/g, ' '));
+  let text = '**None**';
+  if (reviews.length > 0) {
+    text = reviews
+      .map((review: any) => {
+        return `User ${review.reviewer.firstName} ${
+          review.reviewer.lastName
+        } posted review on ${
+          review.sourceType === 'Our Website' ? 'BirdEye' : review.sourceType
+        }
+        
+        **Stars:** ${review.rating}
+        **Title:** ${review.title}
+        **Content:** ${review.comments}`;
+      })
+      .join('\n\n');
+  }
   return text;
+  // r.data.map(review => {}).join('\n\n');
+  //   const oneDayAgo = moment().add(-2, 'days').utc().format();
+  //   const newReviews = r.data.reviews.filter(
+  //     (review: any) => moment(review.date).tz('EST').utc().format() > oneDayAgo
+  //   );
+  //   const text = `
+  // **App reviews posted during the last 48 hours**
+
+  // ${
+  //   newReviews.length === 0
+  //     ? '**None**'
+  //     : newReviews
+  //         .map(
+  //           (review: any) => `User **${review.author}** posted review for **${
+  //             review.product_name
+  //           }** **${review.store === 'apple' ? 'iOS' : 'Android'}** ${
+  //             review.version
+  //           }
+  // **Stars**: ${review.stars}
+  // **Title**: ${review.title}
+  // **Content**: ${review.original_review}`
+  //         )
+  //         .join('\n\n')
+  // }`;
+  //   console.log(text.replace(/[\r\n]+/g, ' '));
+  //   return text;
 };

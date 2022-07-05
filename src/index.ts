@@ -8,10 +8,13 @@ const main = async () => {
   //   `https://api.birdeye.com/resources/v1/business/search?api_key=${apiKey}`
   // );
   // console.log(JSON.stringify(r.data, null, 2));
+  const date = new Date();
+  date.setDate(date.getDate() - 2);
+  console.log(date.toLocaleDateString());
   const r = await axios.post(
     `https://api.birdeye.com/resources/v1/review/businessId/${businessId}?api_key=${apiKey}`,
     {
-      fromDate: '07/01/2022',
+      fromDate: date.toLocaleDateString(),
     }
   );
   console.log(JSON.stringify(r.data, null, 2));

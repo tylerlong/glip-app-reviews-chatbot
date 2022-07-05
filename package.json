@@ -2,7 +2,7 @@
   "license": "MIT",
   "scripts": {
     "test": "ts-node -r dotenv-override-true/config src/index.ts dotenv_config_path=./.myenv",
-    "deploy": "tsc && sls deploy"
+    "deploy": "tsc && sls deploy --aws-profile okta-full-access_524621635179"
   },
   "dependencies": {
     "axios": "^0.27.2",
