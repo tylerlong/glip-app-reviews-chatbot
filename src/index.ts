@@ -1,14 +1,20 @@
 import axios from 'axios';
-import moment from 'moment-timezone';
 
-axios.defaults.headers.common['X-Client-Key'] =
-  process.env.APPFIGURES_CLIENT_KEY;
-axios.defaults.headers.common.Authorization = `Basic ${process.env.BASIC_AUTHORIZATION_KEY}`;
-(async () => {
-  const r = await axios.get('https://api.appfigures.com/v2/reviews');
-  const oneDayAgo = moment().add(-3, 'day').utc().format();
-  const newReviews = r.data.reviews.filter(
-    (review: any) => moment(review.date).tz('EST').utc().format() > oneDayAgo
+const apiKey = process.env.BIRDEYE_API_KEY;
+const businessId = process.env.BIRDEYE_BUSINESS_ID;
+
+const main = async () => {
+  // const r = await axios.get(
+  //   `https://api.birdeye.com/resources/v1/business/search?api_key=${apiKey}`
+  // );
+  // console.log(JSON.stringify(r.data, null, 2));
+  const r = await axios.post(
+    `https://api.birdeye.com/resources/v1/review/businessId/${businessId}?api_key=${apiKey}`,
+    {
+      fromDate: '07/01/2022',
+    }
   );
-  console.log(newReviews);
-})();
+  console.log(JSON.stringify(r.data, null, 2));
+};
+
+main();
