@@ -39,10 +39,6 @@ functions:
     events:
       - http: 'GET /admin/dump-database'
       - http: 'GET /admin/list-subscriptions'
-  # test:
-  #   handler: dist/lambda.test
-  #   events:
-  #     - http: 'GET /test'
   crontab:
     handler: dist/lambda.crontab
     events:
