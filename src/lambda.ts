@@ -39,11 +39,11 @@ ${
               review.sourceType === 'Our Website'
                 ? 'BirdEye'
                 : review.sourceType
-            }
-          
+            }:
           **Stars:** ${review.rating}
           **Title:** ${review.title}
-          **Content:** ${review.comments}`
+          **Content:** ${review.comments}
+          **URL:** ${review.uniqueReviewUrl}`
         )
         .join('\n\n')
 }
@@ -116,32 +116,3 @@ module.exports.maintain = async () =>
       },
     }
   );
-
-module.exports.test = async () => {
-  const date = new Date();
-  date.setDate(date.getDate() - 2);
-  const reviews = await axios.post(
-    `https://api.birdeye.com/resources/v1/review/businessId/${process.env.BIRDEYE_BUSINESS_ID}?api_key=${process.env.BIRDEYE_API_KEY}`,
-    {
-      fromDate: date.toLocaleDateString(),
-    }
-  );
-  let text = '**None**';
-  if (reviews.length > 0) {
-    text = reviews
-      .map((review: any) => {
-        return `User ${review.reviewer.firstName} ${
-          review.reviewer.lastName
-        } posted review on ${
-          review.sourceType === 'Our Website' ? 'BirdEye' : review.sourceType
-        }
-        
-        **Stars:** ${review.rating}
-        **Title:** ${review.title}
-        **Content:** ${review.comments}
-        **URL:** ${review.uniqueReviewUrl}`;
-      })
-      .join('\n\n');
-  }
-  return text;
-};
