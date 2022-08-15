@@ -17,6 +17,7 @@ const crontab = async () => {
     `https://api.birdeye.com/resources/v1/review/businessId/${process.env.BIRDEYE_BUSINESS_ID}?api_key=${process.env.BIRDEYE_API_KEY}`,
     {
       fromDate: date.toLocaleDateString(),
+      statuses: ['all'],
     }
   );
   const newReviews = r.data;
@@ -41,14 +42,13 @@ ${
                 : review.sourceType
             }:
           **Stars:** ${review.rating}
-          **Title:** ${review.title}
           **Content:** ${review.comments}
           **URL:** ${review.uniqueReviewUrl}`
         )
         .join('\n\n')
 }
 
-Click [here](https://birdeye.com/ringcentral-697928128) to view all of them.
+Click [here](https://birdeye.com/ringcentral-697928128?filter=Newest) to view all of them.
 `,
       });
     } catch (e) {

@@ -10,14 +10,18 @@ const main = async () => {
   // console.log(JSON.stringify(r.data, null, 2));
   const date = new Date();
   date.setDate(date.getDate() - 2);
-  const r = await axios.post(
-    `https://api.birdeye.com/resources/v1/review/businessId/${process.env.BIRDEYE_BUSINESS_ID}?api_key=${process.env.BIRDEYE_API_KEY}`,
-    {
-      fromDate: date.toLocaleDateString(),
-      // statuses: 'published',
-    }
-  );
-  console.log(JSON.stringify(r.data, null, 2));
+  try {
+    const r = await axios.post(
+      `https://api.birdeye.com/resources/v1/review/businessId/${process.env.BIRDEYE_BUSINESS_ID}?api_key=${process.env.BIRDEYE_API_KEY}`,
+      {
+        fromDate: date.toLocaleDateString(),
+        statuses: ['all'],
+      }
+    );
+    console.log(JSON.stringify(r.data, null, 2));
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 main();
